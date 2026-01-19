@@ -1,0 +1,48 @@
+<div class="container mx-auto max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6">{{ isEdit ? 'Modifica Docente' : 'Nuovo Docente' }}</h1>
+
+  <form [formGroup]="docenteForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label class="block mb-2 font-semibold">Nome</label>
+      <input
+        type="text"
+        formControlName="firstname"
+        class="w-full border border-gray-300 rounded px-4 py-2"
+        [class.border-red-500]="docenteForm.get('firstname')?.invalid && docenteForm.get('firstname')?.touched"
+      />
+      @if (docenteForm.get('firstname')?.invalid && docenteForm.get('firstname')?.touched) {
+        <p class="text-red-500 text-sm mt-1">Il nome è obbligatorio</p>
+      }
+    </div>
+
+    <div>
+      <label class="block mb-2 font-semibold">Cognome</label>
+      <input
+        type="text"
+        formControlName="lastname"
+        class="w-full border border-gray-300 rounded px-4 py-2"
+        [class.border-red-500]="docenteForm.get('lastname')?.invalid && docenteForm.get('lastname')?.touched"
+      />
+      @if (docenteForm.get('lastname')?.invalid && docenteForm.get('lastname')?.touched) {
+        <p class="text-red-500 text-sm mt-1">Il cognome è obbligatorio</p>
+      }
+    </div>
+
+    <div class="flex gap-4">
+      <button
+        type="submit"
+        [disabled]="docenteForm.invalid"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+      >
+        {{ isEdit ? 'Aggiorna' : 'Crea' }}
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+      >
+        Annulla
+      </button>
+    </div>
+  </form>
+</div>

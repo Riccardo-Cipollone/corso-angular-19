@@ -1,0 +1,72 @@
+<div class="container mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Aule</h1>
+    <button (click)="createNew()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      Nuova Aula
+    </button>
+  </div>
+
+  <!-- Statistics Panel - Using computed() signals -->
+  <div class="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+      <p class="text-sm text-blue-600 font-medium">Totale Aule</p>
+      <p class="text-2xl font-bold text-blue-800">{{ totalAule() }}</p>
+    </div>
+    <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+      <p class="text-sm text-green-600 font-medium">Capacità Totale</p>
+      <p class="text-2xl font-bold text-green-800">{{ capacitaTotale() }}</p>
+    </div>
+    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
+      <p class="text-sm text-purple-600 font-medium">Capacità Media</p>
+      <p class="text-2xl font-bold text-purple-800">{{ capacitaMedia() }}</p>
+    </div>
+    <div class="bg-orange-50 border border-orange-200 rounded-lg p-4 text-center">
+      <p class="text-sm text-orange-600 font-medium">Aula Più Grande</p>
+      <p class="text-sm font-bold text-orange-800">{{ aulaMaxCapacita() }}</p>
+    </div>
+    <div class="bg-teal-50 border border-teal-200 rounded-lg p-4 text-center">
+      <p class="text-sm text-teal-600 font-medium">Aule in Uso</p>
+      <p class="text-2xl font-bold text-teal-800">{{ auleInUso() }}</p>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
+      <p class="text-sm text-gray-600 font-medium">Aule Libere</p>
+      <p class="text-2xl font-bold text-gray-800">{{ auleLibere() }}</p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <p>Caricamento...</p>
+  } @else {
+    <table class="min-w-full border border-gray-300">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border border-gray-300 px-4 py-2">ID</th>
+          <th class="border border-gray-300 px-4 py-2">Nome</th>
+          <th class="border border-gray-300 px-4 py-2">Numero Posti</th>
+          <th class="border border-gray-300 px-4 py-2">Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (aula of aule(); track aula.id) {
+          <tr>
+            <td class="border border-gray-300 px-4 py-2">{{ aula.id }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ aula.name }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ aula.numero_posti }}</td>
+            <td class="border border-gray-300 px-4 py-2">
+              <button (click)="editAula(aula.id)" class="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600">
+                Modifica
+              </button>
+              <button (click)="deleteAula(aula.id)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+                Elimina
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="border border-gray-300 px-4 py-2 text-center">Nessuna aula trovata</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

@@ -1,0 +1,86 @@
+<div class="container mx-auto max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6">{{ isEdit ? 'Modifica Corso' : 'Nuovo Corso' }}</h1>
+
+  <form [formGroup]="corsoForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+      <label class="block mb-2 font-semibold">Nome</label>
+      <input
+        type="text"
+        formControlName="name"
+        class="w-full border border-gray-300 rounded px-4 py-2"
+        [class.border-red-500]="corsoForm.get('name')?.invalid && corsoForm.get('name')?.touched"
+      />
+      @if (corsoForm.get('name')?.invalid && corsoForm.get('name')?.touched) {
+        <p class="text-red-500 text-sm mt-1">Il nome è obbligatorio</p>
+      }
+    </div>
+
+    <div>
+      <label class="block mb-2 font-semibold">Data</label>
+      <input
+        type="datetime-local"
+        formControlName="date"
+        class="w-full border border-gray-300 rounded px-4 py-2"
+        [class.border-red-500]="corsoForm.get('date')?.invalid && corsoForm.get('date')?.touched"
+      />
+      @if (corsoForm.get('date')?.invalid && corsoForm.get('date')?.touched) {
+        <p class="text-red-500 text-sm mt-1">La data è obbligatoria</p>
+      }
+    </div>
+
+    <div>
+      <label class="block mb-2 font-semibold">Docente</label>
+      <select
+        formControlName="docente_id"
+        class="w-full border border-gray-300 rounded px-4 py-2"
+        [class.border-red-500]="corsoForm.get('docente_id')?.invalid && corsoForm.get('docente_id')?.touched"
+      >
+        <option value="">Seleziona un docente</option>
+        @for (docente of docenti(); track docente.id) {
+          <option [value]="docente.id">
+            {{ docente.firstname }} {{ docente.lastname }}
+          </option>
+        }
+      </select>
+      @if (corsoForm.get('docente_id')?.invalid && corsoForm.get('docente_id')?.touched) {
+        <p class="text-red-500 text-sm mt-1">Il docente è obbligatorio</p>
+      }
+    </div>
+
+    <div>
+      <label class="block mb-2 font-semibold">Aula</label>
+      <select
+        formControlName="aula_id"
+        class="w-full border border-gray-300 rounded px-4 py-2"
+        [class.border-red-500]="corsoForm.get('aula_id')?.invalid && corsoForm.get('aula_id')?.touched"
+      >
+        <option value="">Seleziona un'aula</option>
+        @for (aula of aule(); track aula.id) {
+          <option [value]="aula.id">
+            {{ aula.name }} ({{ aula.numero_posti }} posti)
+          </option>
+        }
+      </select>
+      @if (corsoForm.get('aula_id')?.invalid && corsoForm.get('aula_id')?.touched) {
+        <p class="text-red-500 text-sm mt-1">L'aula è obbligatoria</p>
+      }
+    </div>
+
+    <div class="flex gap-4">
+      <button
+        type="submit"
+        [disabled]="corsoForm.invalid"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-gray-400"
+      >
+        {{ isEdit ? 'Aggiorna' : 'Crea' }}
+      </button>
+      <button
+        type="button"
+        (click)="cancel()"
+        class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+      >
+        Annulla
+      </button>
+    </div>
+  </form>
+</div>

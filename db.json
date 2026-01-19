@@ -1,0 +1,141 @@
+{
+  "corsi": [
+    {
+      "id": "1",
+      "name": "Angular 19 Avanzato",
+      "date": "2024-01-15T09:00:00",
+      "aula_id": "1",
+      "docente_id": "1"
+    },
+    {
+      "id": "2",
+      "name": "TypeScript Fundamentals",
+      "date": "2024-01-16T14:00:00",
+      "aula_id": "2",
+      "docente_id": "2"
+    },
+    {
+      "id": "3",
+      "name": "Web Development",
+      "date": "2024-01-17T10:00:00",
+      "aula_id": "1",
+      "docente_id": "1"
+    },
+    {
+      "id": "a2e5",
+      "name": "Corso di React avanzato modificato",
+      "date": "2026-01-14T09:28",
+      "docente_id": "2",
+      "aula_id": "4"
+    },
+    {
+      "id": "4133",
+      "name": "Test creazione corso",
+      "date": "2026-01-22T15:16",
+      "docente_id": "3",
+      "aula_id": "1"
+    }
+  ],
+  "studenti": [
+    {
+      "id": "1",
+      "firstname": "Mario",
+      "lastname": "Rossi",
+      "matricola": "ST001"
+    },
+    {
+      "id": "2",
+      "firstname": "Luigi",
+      "lastname": "Bianchi",
+      "matricola": "ST002"
+    },
+    {
+      "id": "3",
+      "firstname": "Anna",
+      "lastname": "Verdi",
+      "matricola": "ST003"
+    },
+    {
+      "id": "4",
+      "firstname": "Giulia",
+      "lastname": "Neri",
+      "matricola": "ST004"
+    }
+  ],
+  "docenti": [
+    {
+      "id": "1",
+      "firstname": "Marco",
+      "lastname": "Esposito"
+    },
+    {
+      "id": "2",
+      "firstname": "Laura",
+      "lastname": "Ferrari"
+    },
+    {
+      "id": "3",
+      "firstname": "Paolo",
+      "lastname": "Romano"
+    }
+  ],
+  "aule": [
+    {
+      "id": "1",
+      "name": "Aula Magna",
+      "numero_posti": 100
+    },
+    {
+      "id": "2",
+      "name": "Aula Informatica A",
+      "numero_posti": 30
+    },
+    {
+      "id": "3",
+      "name": "Aula Informatica B",
+      "numero_posti": 25
+    },
+    {
+      "id": "4",
+      "name": "Laboratorio",
+      "numero_posti": 20
+    }
+  ],
+  "corso_studente": [
+    {
+      "id": "1",
+      "corso_id": "1",
+      "studente_id": "1"
+    },
+    {
+      "id": "2",
+      "corso_id": "1",
+      "studente_id": "2"
+    },
+    {
+      "id": "3",
+      "corso_id": "2",
+      "studente_id": "2"
+    },
+    {
+      "id": "4",
+      "corso_id": "2",
+      "studente_id": "3"
+    },
+    {
+      "id": "5",
+      "corso_id": "3",
+      "studente_id": "1"
+    },
+    {
+      "id": "6",
+      "corso_id": "3",
+      "studente_id": "3"
+    },
+    {
+      "id": "7",
+      "corso_id": "3",
+      "studente_id": "4"
+    }
+  ]
+}

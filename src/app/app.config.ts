@@ -1,8 +1,16 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
+import { loggingInterceptor } from './interceptors/logging.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    // Register HTTP interceptors using withInterceptors()
+    // Interceptors run in the order they are provided
+    provideHttpClient(withInterceptors([loggingInterceptor])),
+  ],
 };

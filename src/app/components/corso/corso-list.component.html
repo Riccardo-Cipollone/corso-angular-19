@@ -1,0 +1,83 @@
+<div class="container mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Corsi</h1>
+    <button
+      (click)="createNew()"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Nuovo Corso
+    </button>
+  </div>
+
+  <!--
+    SMART/DUMB PATTERN IN ACTION
+
+    The statistics panel is now a separate "dumb" component.
+    - The smart component (this one) COMPUTES the statistics
+    - The dumb component (app-corso-statistics) DISPLAYS them
+
+    Benefits:
+    - CorsoStatisticsComponent can be reused elsewhere
+    - Easy to test CorsoStatisticsComponent (no service mocking needed)
+    - Clear separation of concerns
+  -->
+  <app-corso-statistics
+    [totalCorsi]="totalCorsi()"
+    [capacitaTotale]="capacitaTotale()"
+    [capacitaMedia]="capacitaMedia()"
+    [docentiAttivi]="docentiAttivi()"
+    [auleInUso]="auleInUso()"
+  ></app-corso-statistics>
+
+  @if (loading()) {
+  <p>Caricamento...</p>
+  } @else {
+  <table class="min-w-full border border-gray-300">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="border border-gray-300 px-4 py-2">ID</th>
+        <th class="border border-gray-300 px-4 py-2">Nome</th>
+        <th class="border border-gray-300 px-4 py-2">Data</th>
+        <th class="border border-gray-300 px-4 py-2">Docente</th>
+        <th class="border border-gray-300 px-4 py-2">Aula</th>
+        <th class="border border-gray-300 px-4 py-2">Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (corso of corsi(); track corso.id) {
+      <tr>
+        <td class="border border-gray-300 px-4 py-2">{{ corso.id }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ corso.name }}</td>
+        <td class="border border-gray-300 px-4 py-2">{{ corso.date }}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          {{ getDocenteName(corso.docente_id) }}
+        </td>
+        <td class="border border-gray-300 px-4 py-2">
+          {{ getAulaName(corso.aula_id) }}
+        </td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button
+            (click)="editCorso(corso.id)"
+            class="bg-yellow-500 text-white px-2 py-1 rounded mr-2 hover:bg-yellow-600"
+          >
+            Modifica
+          </button>
+          <button
+            (click)="deleteCorso(corso.id)"
+            class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+          >
+            Elimina
+          </button>
+        </td>
+      </tr>
+      } @empty {
+      <tr>
+        <td colspan="6" class="border border-gray-300 px-4 py-2 text-center">
+          Nessun corso trovato
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</div>
