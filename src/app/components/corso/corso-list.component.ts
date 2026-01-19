@@ -8,25 +8,10 @@ import { ToastService } from '../../shared/toast/toast.service';
 import { CorsoStatisticsComponent } from './components/corso-statistics.component';
 
 /**
- * SMART (CONTAINER) COMPONENT
- *
- * This is a "smart" or "container" component. Key characteristics:
- *
- * 1. Injects services and handles business logic
- * 2. Manages state (loading, data, etc.)
- * 3. Computes derived values from raw data
- * 4. Passes data to child "dumb" components via @Input()
- * 5. Handles events from child components via @Output()
- *
- * The CorsoStatisticsComponent is a "dumb" child component that:
- * - Receives data through @Input() properties
- * - Doesn't know about services
- * - Only responsible for displaying data
- *
- * This pattern is called "Smart/Dumb" or "Container/Presentational"
- *
- * Also demonstrates:
- * - APPROACH 1: Computed loading state combining multiple services
+ * Componente "Smart" (Container) - Dimostra:
+ * 1. Pattern Smart/Dumb (usa CorsoStatisticsComponent come figlio dumb)
+ * 2. Computed loading combinando più servizi
+ * Vedi README.md per dettagli.
  */
 @Component({
   selector: 'app-corso-list',
@@ -36,22 +21,17 @@ import { CorsoStatisticsComponent } from './components/corso-statistics.componen
   styleUrl: './corso-list.component.css',
 })
 export class CorsoListComponent implements OnInit {
-  // ========== SERVICE INJECTIONS (Smart component responsibility) ==========
   private corsoService = inject(CorsoService);
   private docenteService = inject(DocenteService);
   private aulaService = inject(AulaService);
   private router = inject(Router);
   private toast = inject(ToastService);
 
-  // ========== DATA SIGNALS ==========
   corsi = this.corsoService.corsi;
   docenti = this.docenteService.docenti;
   aule = this.aulaService.aule;
 
-  /**
-   * COMPUTED LOADING STATE
-   * Combines all three loading signals into one.
-   */
+  // Computed loading combinato
   loading = computed(
     () =>
       this.corsoService.loading() ||
@@ -59,12 +39,9 @@ export class CorsoListComponent implements OnInit {
       this.aulaService.loading()
   );
 
-  // ========== COMPUTED STATISTICS (Smart component computes, dumb displays) ==========
-
-  /** Total number of courses */
+  // Statistiche calcolate (computed signals)
   totalCorsi = computed(() => this.corsi().length);
 
-  /** Total capacity: sum of posti for all aule used by courses */
   capacitaTotale = computed(() => {
     const corsiList = this.corsi();
     const auleList = this.aule();
@@ -74,33 +51,26 @@ export class CorsoListComponent implements OnInit {
     }, 0);
   });
 
-  /** Number of unique docenti teaching courses */
   docentiAttivi = computed(() => {
     const uniqueDocenti = new Set(this.corsi().map((c) => c.docente_id));
     return uniqueDocenti.size;
   });
 
-  /** Number of unique aule being used */
   auleInUso = computed(() => {
     const uniqueAule = new Set(this.corsi().map((c) => c.aula_id));
     return uniqueAule.size;
   });
 
-  /** Average capacity per course */
   capacitaMedia = computed(() => {
     const total = this.totalCorsi();
     return total > 0 ? Math.round(this.capacitaTotale() / total) : 0;
   });
-
-  // ========== LIFECYCLE ==========
 
   ngOnInit(): void {
     this.corsoService.loadCorsi();
     this.docenteService.loadDocenti();
     this.aulaService.loadAule();
   }
-
-  // ========== HELPER METHODS ==========
 
   getDocenteName(docenteId: string): string {
     const docente = this.docenti().find((d) => d.id === docenteId);
@@ -112,8 +82,6 @@ export class CorsoListComponent implements OnInit {
     return aula ? aula.name : 'N/A';
   }
 
-  // ========== ACTIONS ==========
-
   editCorso(id: string): void {
     this.router.navigate(['/corsi', id]);
   }
@@ -121,9 +89,7 @@ export class CorsoListComponent implements OnInit {
   deleteCorso(id: string): void {
     if (confirm('Sei sicuro di voler eliminare questo corso?')) {
       this.corsoService.deleteCorso(id).subscribe({
-        next: () => {
-          this.toast.success('Corso eliminato con successo!');
-        },
+        next: () => this.toast.success('Corso eliminato con successo!'),
         error: (err) => {
           console.error("Errore durante l'eliminazione del corso:", err);
           this.toast.error("Errore durante l'eliminazione del corso.");

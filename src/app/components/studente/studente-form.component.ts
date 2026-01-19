@@ -11,8 +11,7 @@ import { StudenteService } from '../../services/studente.service';
 import { HasUnsavedChanges } from '../../guards/unsaved-changes.guard';
 
 /**
- * Implements HasUnsavedChanges for the CanDeactivate guard.
- * See corso-form.component.ts for detailed comments on how this works.
+ * Form Studenti - Implementa HasUnsavedChanges per il guard.
  */
 @Component({
   selector: 'app-studente-form',

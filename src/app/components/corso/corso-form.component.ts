@@ -14,16 +14,10 @@ import { HasUnsavedChanges } from '../../guards/unsaved-changes.guard';
 import { ToastService } from '../../shared/toast/toast.service';
 
 /**
- * TOAST SERVICE INTEGRATION
- *
- * This component demonstrates replacing alert() with ToastService.
- * Benefits:
- * - Better UX (non-blocking notifications)
- * - Consistent styling across the app
- * - Auto-dismiss with configurable duration
- * - Different types for different scenarios
- *
- * Also implements HasUnsavedChanges for the CanDeactivate guard.
+ * Form Corsi - Dimostra:
+ * 1. HasUnsavedChanges per il guard CanDeactivate
+ * 2. ToastService per le notifiche
+ * Vedi README.md per dettagli.
  */
 @Component({
   selector: 'app-corso-form',
@@ -47,8 +41,8 @@ export class CorsoFormComponent implements OnInit, HasUnsavedChanges {
   docenti = this.docenteService.docenti;
   aule = this.aulaService.aule;
 
+  // Richiesti da HasUnsavedChanges
   submitted = false;
-
   get form(): FormGroup {
     return this.corsoForm;
   }
@@ -80,7 +74,6 @@ export class CorsoFormComponent implements OnInit, HasUnsavedChanges {
         },
         error: (err) => {
           console.error('Errore durante il caricamento del corso:', err);
-          // Using ToastService instead of alert()
           this.toast.error('Errore durante il caricamento del corso.');
           this.submitted = true;
           this.router.navigate(['/corsi']);
@@ -96,13 +89,11 @@ export class CorsoFormComponent implements OnInit, HasUnsavedChanges {
         this.corsoService.updateCorso(this.corsoId, corsoData).subscribe({
           next: () => {
             this.submitted = true;
-            // Using ToastService for success message
             this.toast.success('Corso aggiornato con successo!');
             this.router.navigate(['/corsi']);
           },
           error: (err) => {
             console.error("Errore durante l'aggiornamento del corso:", err);
-            // Using ToastService for error message
             this.toast.error("Errore durante l'aggiornamento del corso.");
           },
         });
@@ -110,13 +101,11 @@ export class CorsoFormComponent implements OnInit, HasUnsavedChanges {
         this.corsoService.createCorso(corsoData).subscribe({
           next: () => {
             this.submitted = true;
-            // Using ToastService for success message
             this.toast.success('Corso creato con successo!');
             this.router.navigate(['/corsi']);
           },
           error: (err) => {
             console.error('Errore durante la creazione del corso:', err);
-            // Using ToastService for error message
             this.toast.error('Errore durante la creazione del corso.');
           },
         });

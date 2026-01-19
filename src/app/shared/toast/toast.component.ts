@@ -3,21 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ToastService, Toast, ToastType } from './toast.service';
 
 /**
- * TOAST COMPONENT
- *
- * A presentational component that displays toast notifications.
- * It listens to the ToastService signal and renders all active toasts.
- *
- * Features:
- * - Different colors for different toast types
- * - Smooth CSS animations for enter/exit
- * - Click to dismiss
- * - Auto-dismiss after timeout
- *
- * Add this component to your main layout:
- * ```html
- * <app-toast></app-toast>
- * ```
+ * Componente per visualizzare le notifiche toast.
+ * Vedi README.md per dettagli sul pattern.
  */
 @Component({
   selector: 'app-toast',
@@ -42,7 +29,6 @@ import { ToastService, Toast, ToastType } from './toast.service';
   `,
   styles: [
     `
-      /* Animation for toast entry */
       :host ::ng-deep div[role='alert'] {
         animation: slideIn 0.3s ease-out;
       }
@@ -62,13 +48,8 @@ import { ToastService, Toast, ToastType } from './toast.service';
 })
 export class ToastComponent {
   private toastService = inject(ToastService);
-
-  /** Expose toasts signal for template */
   toasts = this.toastService.toasts;
 
-  /**
-   * Get Tailwind classes based on toast type
-   */
   getToastClasses(type: ToastType): string {
     const baseClasses =
       'px-4 py-3 rounded-lg shadow-lg flex items-center transition-all duration-300';
@@ -83,9 +64,6 @@ export class ToastComponent {
     return `${baseClasses} ${typeClasses[type]}`;
   }
 
-  /**
-   * Get icon SVG based on toast type
-   */
   getIcon(type: ToastType): string {
     const icons: Record<ToastType, string> = {
       success:
@@ -100,9 +78,6 @@ export class ToastComponent {
     return icons[type];
   }
 
-  /**
-   * Dismiss a toast by clicking on it
-   */
   dismiss(id: number): void {
     this.toastService.remove(id);
   }

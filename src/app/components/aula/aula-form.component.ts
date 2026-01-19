@@ -11,8 +11,7 @@ import { AulaService } from '../../services/aula.service';
 import { HasUnsavedChanges } from '../../guards/unsaved-changes.guard';
 
 /**
- * Implements HasUnsavedChanges for the CanDeactivate guard.
- * See corso-form.component.ts for detailed comments on how this works.
+ * Form Aule - Implementa HasUnsavedChanges per il guard.
  */
 @Component({
   selector: 'app-aula-form',

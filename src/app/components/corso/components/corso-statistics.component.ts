@@ -2,34 +2,14 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 /**
- * DUMB (PRESENTATIONAL) COMPONENT
- *
- * This is a "dumb" or "presentational" component. Key characteristics:
- *
- * 1. NO service injections - it doesn't know where data comes from
- * 2. Receives ALL data through @Input() properties
- * 3. Emits events through @Output() (if needed)
- * 4. Only responsible for displaying data
- * 5. Highly reusable and easy to test
- * 6. Uses OnPush change detection for better performance
- *
- * Benefits of Smart/Dumb Pattern:
- * - Clear separation of concerns
- * - Dumb components are easy to unit test (no mocking services)
- * - Can be reused in different contexts
- * - Smart components handle logic, dumb components handle display
- *
- * The parent "smart" component (CorsoListComponent) is responsible for:
- * - Injecting services
- * - Loading data
- * - Computing statistics
- * - Passing data to this dumb component
+ * Componente "Dumb" (Presentazionale) per le statistiche.
+ * NON inietta servizi, riceve dati solo via @Input().
+ * Vedi README.md per dettagli sul pattern Smart/Dumb.
  */
 @Component({
   selector: 'app-corso-statistics',
   standalone: true,
   imports: [CommonModule],
-  // OnPush: Only re-render when @Input values change (better performance)
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
@@ -67,10 +47,6 @@ import { CommonModule } from '@angular/common';
   `,
 })
 export class CorsoStatisticsComponent {
-  /**
-   * All data comes through @Input() - this component is "dumb"
-   * and doesn't know about services or how data is computed.
-   */
   @Input() totalCorsi = 0;
   @Input() capacitaTotale = 0;
   @Input() capacitaMedia = 0;

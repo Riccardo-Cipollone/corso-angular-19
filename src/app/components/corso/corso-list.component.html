@@ -9,18 +9,7 @@
     </button>
   </div>
 
-  <!--
-    SMART/DUMB PATTERN IN ACTION
-
-    The statistics panel is now a separate "dumb" component.
-    - The smart component (this one) COMPUTES the statistics
-    - The dumb component (app-corso-statistics) DISPLAYS them
-
-    Benefits:
-    - CorsoStatisticsComponent can be reused elsewhere
-    - Easy to test CorsoStatisticsComponent (no service mocking needed)
-    - Clear separation of concerns
-  -->
+  <!-- Pattern Smart/Dumb: componente dumb per le statistiche -->
   <app-corso-statistics
     [totalCorsi]="totalCorsi()"
     [capacitaTotale]="capacitaTotale()"
